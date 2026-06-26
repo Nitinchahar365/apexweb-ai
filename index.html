@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexWeb AI | Premium Web Development & AI Chatbots</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #38bdf8, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav a {
+            color: #9ca3af;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #38bdf8;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #3b82f6, #38bdf8);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 120px 20px 80px;
+            background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #38bdf8, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 19px;
+            color: #9ca3af;
+            max-width: 650px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Pricing Calculator Section */
+        .calculator-section {
+            padding: 60px 8%;
+            background: #0b1329;
+            border-radius: 24px;
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .calculator-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .calc-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 38px; }
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #111c44;
+            padding: 18px 24px;
+            border-radius: 16px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .option-item:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            background: #162256;
+        }
+
+        .option-item span {
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .option-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: #38bdf8;
+            cursor: pointer;
+        }
+
+        .price-display {
+            background: linear-gradient(180deg, #111c44, #0b1329);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px dashed rgba(56, 189, 248, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .price-display h3 {
+            font-size: 18px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .final-price {
+            font-size: 56px;
+            font-weight: 800;
+            color: #38bdf8;
+            margin-bottom: 24px;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-order {
+            display: block;
+            background: #ffffff;
+            color: #030712;
+            padding: 16px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+        }
+
+        .btn-order:hover {
+            background: #38bdf8;
+            color: white;
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Floating WhatsApp Support for Global Clients */
+        .whatsapp-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 10000;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .whatsapp-widget:hover {
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        .whatsapp-widget svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">ApexWeb AI</div>
+        <nav>
+            <a href="#" class="active">Home</a>
+            <a href="#">Estimate Cost</a>
+            <a href="#">Client Portal</a>
+        </nav>
+        <a href="#" class="btn-login">Sign In / Register</a>
+    </header>
+
+    <section class="hero">
+        <h1>High-Performance <span>Websites & AI Chatbots</span> For Modern Businesses</h1>
+        <p>Scale your business globally. We engineer premium, fully customized websites and intelligent AI customer support agents designed to maximize conversion rates.</p>
+    </section>
+
+    <section class="calculator-section">
+        <h2>Instant Project Cost Calculator</h2>
+        <div class="calc-grid">
+            
+            <div class="options-group">
+                <label class="option-item">
+                    <span>Premium 1-Page Core Framework ($499)</span>
+                    <input type="checkbox" class="calc-option" value="499" checked disabled>
+                </label>
+                <label class="option-item">
+                    <span>Multi-Page Expansion (3-5 Pages) (+$299)</span>
+                    <input type="checkbox" class="calc-option" value="299">
+                </label>
+                <label class="option-item">
+                    <span>Custom AI Chatbot Integration (+$399)</span>
+                    <input type="checkbox" class="calc-option" value="399">
+                </label>
+                <label class="option-item">
+                    <span>Advanced Lead Generation & Order Forms (+$149)</span>
+                    <input type="checkbox" class="calc-option" value="149">
+                </label>
+                <label class="option-item">
+                    <span>Global SEO & Speed Optimization Suite (+$199)</span>
+                    <input type="checkbox" class="calc-option" value="199">
+                </label>
+            </div>
+
+            <div class="price-display">
+                <h3>Estimated Investment</h3>
+                <div class="final-price" id="total-price">$499</div>
+                <p style="color: #9ca3af; font-size: 13px; margin-bottom: 24px;">*Includes Free Secure Deployment & Global Hosting</p>
+                <a href="#" class="btn-order">Secure Project Booking</a>
+            </div>
+
+        </div>
+    </section>
+
+    <a href="https://wa.me/910000000000?text=Hello,%20I'm%20interested%20in%20a%20premium%20website%20and%20AI%20chatbot%20solution." class="whatsapp-widget" target="_blank" title="Instant Consultant Chat">
+        <svg viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.488 1.451 5.416 1.452 5.518 0 10.006-4.486 10.01-10.004.002-2.673-1.04-5.184-2.936-7.082-1.895-1.899-4.417-2.944-7.089-2.945-5.522 0-10.01 4.486-10.015 10.004-.002 1.83.473 3.62 1.378 5.195L1.449 21.61l4.2-1.102zM17.92 15.316c-.304-.153-1.79-.883-2.063-.982-.273-.1-.471-.15-.671.15-.198.298-.77 1.003-.943 1.201-.174.199-.347.224-.651.072-.304-.153-1.284-.473-2.447-1.511-.905-.807-1.516-1.804-1.694-2.109-.178-.304-.019-.468.133-.619.136-.136.304-.355.456-.532.152-.178.203-.304.304-.508.102-.203.051-.381-.025-.533-.076-.152-.672-1.622-.92-2.217-.242-.582-.488-.504-.671-.513-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.79-.732 2.04-1.438.25-.706.25-1.314.175-1.438-.076-.124-.272-.198-.576-.351z"/>
+        </svg>
+    </a>
+
+    <script>
+        const checkboxes = document.querySelectorAll('.calc-option');
+        const priceDisplay = document.getElementById('total-price');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                let total = 499; 
+                checkboxes.forEach(box => {
+                    if (box.checked && !box.disabled) {
+                        total += parseInt(box.value);
+                    }
+                });
+                priceDisplay.innerText = '$' + total.toLocaleString('en-US');
+            });
+        });
+    </script>
+</body>
+</html>
