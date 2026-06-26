@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ApexWeb AI | Premium Web Development & AI Chatbots</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Your Real Public Key Integrated
+            emailjs.init("2-ESnvmkIoYpuJcAI");
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -418,8 +425,8 @@
             <div id="otpScreen" class="hidden">
                 <h3>Enter Secure OTP</h3>
                 <p style="color:#9ca3af; font-size:14px; text-align:center; margin-bottom:20px;">We sent a 6-digit verification code to your email.</p>
-                <input type="text" id="otpInput" class="input-field" placeholder="Enter 6-Digit OTP" maxlength="6" style="text-align:center; font-size:20px; letter-spacing:5px;">
-                <button class="auth-btn" onclick="verifyOTPCode()">Verify & Complete</button>
+                <input type="text" id="otpInput" class="input-field" placeholder="Enter OTP" maxlength="6" style="text-align:center; font-size:20px; letter-spacing:5px;">
+                <button class="auth-btn" id="verifyBtn" onclick="verifyOTPCode()">Verify & Complete</button>
             </div>
         </div>
     </div>
@@ -447,6 +454,7 @@
 
         // Modal Interactive Controls
         let currentMode = 'signup';
+        let generatedOTP = '';
         const modal = document.getElementById('authModal');
         
         function toggleModal(mode) {
@@ -479,32 +487,63 @@
             }
         }
 
-        // OTP Backend Simulation Connection Placeholder
+        // REAL EMAILJS OTP DELIVERY INTEGRATION
         function sendOTPCode() {
             const email = document.getElementById('authEmail').value;
-            if(!email) { alert('Please enter a valid email'); return; }
+            const name = document.getElementById('authName').value || 'Valued Client';
+            const btn = document.getElementById('mainAuthBtn');
+
+            if(!email) { alert('Please enter a valid email address.'); return; }
             
             if(currentMode === 'signup') {
-                document.getElementById('authFormScreen').classList.add('hidden');
-                document.getElementById('otpScreen').classList.remove('hidden');
-                // Real Firebase connection triggers here
-                console.log("OTP Sent to " + email);
+                btn.innerText = "Sending Code...";
+                btn.disabled = true;
+
+                // Generating unique 6-digit random number
+                generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+                // Preparing EmailJS configuration parameters
+                const templateParams = {
+                    email: email,
+                    name: name,
+                    custom_otp: generatedOTP // Passes OTP securely to EmailJS
+                };
+
+                // Sending via your configured service and template
+                emailjs.send('service_28ym595', 'template_2uudh2t', templateParams)
+                    .then(function(response) {
+                        alert('Secure OTP sent successfully to ' + email);
+                        document.getElementById('authFormScreen').classList.add('hidden');
+                        document.getElementById('otpScreen').classList.remove('hidden');
+                    }, function(error) {
+                        alert('Failed to send OTP. Please check EmailJS configuration.');
+                        console.log('FAILED...', error);
+                        btn.innerText = "Send Verification OTP";
+                        btn.disabled = false;
+                    });
+
             } else {
-                alert('Sign In Successful! (Dashboard Redirection)');
+                alert('Sign In Successful! (Dashboard Active)');
                 closeModal();
             }
         }
 
         function verifyOTPCode() {
-            const otp = document.getElementById('otpInput').value;
-            if(otp.length === 6) {
-                alert('Email Verified Successfully! Access Granted.');
-                // Redirection Logic to Order Form / Dashboard
+            const userOTP = document.getElementById('otpInput').value;
+            const verifyBtn = document.getElementById('verifyBtn');
+
+            if(userOTP === generatedOTP && generatedOTP !== '') {
+                verifyBtn.innerText = "Verifying...";
+                alert('Email Verified Successfully! Access Granted to ApexWeb AI Dashboard.');
+                
+                // Resetting screen state
                 document.getElementById('otpScreen').classList.add('hidden');
                 document.getElementById('authFormScreen').classList.remove('hidden');
+                document.getElementById('mainAuthBtn').innerText = "Send Verification OTP";
+                document.getElementById('mainAuthBtn').disabled = false;
                 closeModal();
             } else {
-                alert('Invalid OTP. Please enter a 6-digit code.');
+                alert('Incorrect OTP code. Verification failed.');
             }
         }
     </script>
