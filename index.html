@@ -504,9 +504,10 @@
 
                 // Preparing EmailJS configuration parameters
                 const templateParams = {
-                    email: email,
-                    name: name,
-                    custom_otp: generatedOTP // Passes OTP securely to EmailJS
+    to_email: email,   //  Ab yeh EmailJS ke {{to_email}} se ekdum match karega!
+    name: name,
+    custom_otp: generatedOTP
+};
                 };
 
                 // Sending via your configured service and template
