@@ -168,9 +168,10 @@
 
                 // Preparing EmailJS configuration parameters
                 const templateParams = {
-                    to_email: email, // Matches EmailJS {{to_email}} perfectly
+                    to_email: email,
                     name: name,
-                    custom_otp: generatedOTP // Passes OTP securely to EmailJS
+                    passcode: generatedOTP,
+                    custom_otp: generatedOTP
                 };
 
                 // Sending via configured service and template
